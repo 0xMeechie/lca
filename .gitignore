@@ -1,0 +1,12 @@
+.DS_Store
+.DS_Store?
+
+# Local .terraform directories
+**/.terraform/*
+.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+.terraform.lock.hcl
