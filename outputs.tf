@@ -19,3 +19,9 @@ output "web_subnets" {
   }
 }
 
+output "load_balancer_dns" {
+  description = "dns of the load balancer"
+  value       = aws_lb.wordpress.dns_name
+
+}
+
