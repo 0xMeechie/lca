@@ -1,7 +1,7 @@
 resource "aws_security_group" "lb" {
   name        = "${var.environment}-${var.ecs_service_name}-lb"
   description = "Allow connection to the LB from the world"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
 }
 
@@ -23,7 +23,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_out_lb" {
 
 resource "aws_security_group" "ecs" {
   name        = "${var.environment}-${var.ecs_service_name}-ecs"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
   description = "Allow connection from the lb to the cluster"
 
 }
@@ -43,7 +43,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_out_ecs" {
 
 resource "aws_security_group" "rds" {
   name        = "${var.environment}-${var.ecs_service_name}-rds"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
   description = "Allow connection to the database"
 
 }

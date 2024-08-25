@@ -1,5 +1,5 @@
 resource "aws_lb" "wordpress" {
-  subnets            = local.public_subnets_id_list
+  subnets            = var.public_subnets
   internal           = false
   name               = "${var.environment}-${var.ecs_service_name}-lb"
   load_balancer_type = "application"
@@ -10,15 +10,15 @@ resource "aws_lb" "wordpress" {
 
 resource "aws_lb_target_group" "wordpress" {
   name        = "${var.environment}-${var.ecs_service_name}-tg"
-  port        = 80
+  port        = var.container_port
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 }
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.wordpress.arn
-  port              = "80"
+  port              = var.container_port
   protocol          = "HTTP"
 
   default_action {

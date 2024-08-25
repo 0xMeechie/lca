@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "main" {
 
-  subnet_ids = local.data_subnets_id_list
+  subnet_ids = var.rds_subnets
 
 
 }

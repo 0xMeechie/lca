@@ -1,7 +1,7 @@
 [
   {
-    "name": "wordpress",
-    "image": "wordpress:latest",
+    "name": "${CONTAINER_NAME}",
+    "image": "${CONTAINER_IMAGE}:${CONTAINER_VERSION}",
     "memory": 512,
     "cpu": 256,
     "essential": true,
@@ -21,9 +21,9 @@
     ],
     "portMappings": [
       {
-        "containerPort": 80,
-        "hostPort": 80
-      }
+        "containerPort": ${CONTAINER_PORT},
+        "hostPort": ${CONTAINER_PORT}
+        }
     ]
   }
 ]

@@ -31,10 +31,14 @@ resource "aws_ecs_task_definition" "wordpress" {
   cpu                      = 256
   memory                   = 512
   requires_compatibilities = ["FARGATE"]
-  container_definitions = templatefile("${path.module}/files/website-td.json", {
-    DB_HOST = aws_db_instance.main.endpoint
-    DB_USER = var.db_username
-    DB_PW   = local.db_password
+  container_definitions = templatefile("${path.module}/files/container-td.json", {
+    DB_HOST           = aws_db_instance.main.endpoint
+    DB_USER           = var.db_username
+    DB_PW             = local.db_password
+    CONTAINER_NAME    = var.container_name
+    CONTAINER_IMAGE   = var.container_image
+    CONTAINER_VERSION = var.container_image_version
+    CONTAINER_PORT    = var.container_port
   })
 
 }
@@ -48,13 +52,13 @@ resource "aws_ecs_service" "wordpress" {
 
 
   network_configuration {
-    subnets         = local.service_subnets_id_list
+    subnets         = var.ecs_subnets
     security_groups = [aws_security_group.ecs.id]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.wordpress.arn
-    container_name   = "wordpress"
+    container_name   = var.container_name
     container_port   = 80
   }
 }
