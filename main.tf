@@ -18,6 +18,8 @@ module "ecs" {
   container_port          = var.container_port
   container_image         = var.container_image
   container_image_version = var.container_image_version
+
+  depends_on = [module.vpc]
 }
 
 
